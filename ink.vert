@@ -12,10 +12,13 @@ uniform vec3 uEye;
 
 void main(void) {
     gl_Position = uPMatrix * uMVMatrix * uTMatrix * vec4(vPos, 1.0);
-    
-    // TODO:
-    // The below the depth coordiante to something very large
-    // You should only do this for front facing lines, so that
-    // the back ones are drawn
-    gl_Position[2] = 1.0e+8; 
+
+    vec3 N = normalize(uNMatrix * vNormal);
+    vec3 x = (uTMatrix * vec4(vPos,1.0)).xyz;
+    vec3 eyeX = normalize(uEye - x);
+
+    if (dot(N,eyeX) > 0.0) {
+        gl_Position[2] = 1.0e+8; 
+    } 
+
 }

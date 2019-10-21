@@ -63,6 +63,13 @@ void main(void) {
     vec3 color = sColor + dColor;
 
     float fac = 1.0;
+
+    float gray = 0.3*color.x + 0.59*color.y + 0.11*color.z;
+    float numLevels = 3.0;
+
+    float toRound = 2.1 * gray * uNumLevels;
+
+    fac = floor(toRound + 0.5) / uNumLevels;
     // TODO: If you're doing quantization, fill in fac appropriately
 
     gl_FragColor = vec4(fac*color, 1.0);
